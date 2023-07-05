@@ -5,12 +5,22 @@ const { validationResult } = require("express-validator");
 
 const crearUsuario=(req,res)=>
 {
-    const {nombre,edad,password}=req.body;
+   
+    const {nombre,edad}=req.body;
 
     const errors=validationResult(req);
+
+    if(!errors.isEmpty())
+    {
+        return res.json({errors:errors.mapped()});
+    }
+
+    if(edad<18){
+        return res.json("la edad debe ser mayor a 18")
+    }
     
     
-    console.log(req.body.nombre)
+   
     res.json({msg:'usuario registrado'});
 }
 

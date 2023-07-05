@@ -5,9 +5,17 @@ require('dotenv').config();
 const app = express();
 
 
-app.use(express.static('public'))
 
-app.use(express.json);
+app.get('/', (req, res) => {
+
+    res.send('peticion get');
+
+});
+
+
+app.use(express.static('public'));
+
+app.use(express.json());
 
 
 

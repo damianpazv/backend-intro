@@ -5,7 +5,7 @@ const { check } = require('express-validator');
 const router= express.Router();
 
 
-router.get('/',
+router.post('/new',
 
 [check("nombre","el nombre es obligatorio").not().isEmpty(),
 check("edad","edad es obligatorio").not().isEmpty(),

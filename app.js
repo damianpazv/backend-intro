@@ -1,4 +1,5 @@
 const express = require('express');
+const { dbConnection } = require('./database/config');
 require('dotenv').config();
 
 
@@ -17,6 +18,7 @@ app.use(express.static('public'));
 
 app.use(express.json());
 
+dbConnection();
 
 
 app.use('/auth',require('./routes/auth'))

@@ -1,7 +1,7 @@
 const { validationResult } = require("express-validator");
 const Usuario=require("../model/usuario-model")
 
-usuarioModel
+
 
 
 const crearUsuario= async(req,res)=>

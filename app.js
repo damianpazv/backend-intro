@@ -18,7 +18,7 @@ app.use(express.static('public'));
 
 app.use(express.json());
 
-dbConnection();
+//dbConnection();
 
 
 app.use('/auth',require('./routes/auth'))

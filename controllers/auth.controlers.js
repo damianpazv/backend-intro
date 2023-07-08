@@ -15,7 +15,7 @@ const crearUsuario= async(req,res)=>
 
     if(!errors.isEmpty())
     {
-        return res.json({errors:errors.mapped()});
+        return res.json({errors:errors.mapped(),});
     }
 
   try{
@@ -45,9 +45,9 @@ res.json({msg:"error. contactese con el administrador"});
 }
 
 
-const loginUsuario=(req,res)=>
+const loginUsuario=async(req,res)=>
 {
-    const {name,email,password}=req.body;
+    const {email,password}=req.body;
 
     const errors=validationResult(req);
 
@@ -55,13 +55,34 @@ const loginUsuario=(req,res)=>
     {
         return res.json({errors:errors.mapped()});
     }
-    res.send('usuario logueado');
+    
+
+    try{
+
+        let usuario= await Usuario.findOne({email});
+        if(!usuario){
+            return res.json({msg:"alguno de los datos es incorrecto"});
+        }
+
+        const validarContraseña= bcrypt.compareSync(password,usuario.password);
+
+        if(!validarContraseña)
+        {
+res.json({mge:"alguno de los datos es incorrecto"})
+        }
+
+        res.json({msg:"usuario loguedo correctamente"});
+    }
+
+
+
+    catch(error){
+        res.json({msg:"error. contactese con el administrador"});
+            }
 }
 
-const prueba=(req,res) => {
-    res.json("hola");
-}
 
 
-module.exports = {crearUsuario,loginUsuario,prueba};
+
+module.exports = {crearUsuario,loginUsuario,};
 

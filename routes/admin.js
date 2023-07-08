@@ -3,7 +3,7 @@ const routerAdmin= express.Router();
 
 routerAdmin.get('/', (req, res) => {
 
-    res.send('peticion get');
+    res.send(req.body);
 
 });
 

@@ -21,7 +21,7 @@ const crearUsuario= async(req,res)=>
   try{
 let usuario= await Usuario.findOne({email});
 if(usuario){
-    return res.json({msg:"un usuario ya existe con este mail"})
+    return res.json({msg:"alguno de los datos es incorrecto"})
 }
     usuario=new Usuario(req.body);
     

@@ -8,7 +8,7 @@ routerAuth.post('/new',
 
 [check('name',"el nombre es obligatorio").not().isEmpty(),
  check("email","el email no es valido").not().isEmpty().isEmail(),
-check("password","password debe tener mas de 5 caracteres").not().isEmpty().isLength({
+check("password","password debe tener mas de 5 caracteres").isLength({
     min:5
  }),
 ],
@@ -18,7 +18,7 @@ crearUsuario);
 routerAuth.post('/login',
 
 [check("email","el email no es valido").not().isEmpty().isEmail(),
-check("password","password debe tener mas de 5 caracteres").not().isLength({min:5})]
+check("password","password debe tener mas de 5 caracteres").isLength({min:5})]
 
 ,loginUsuario);
 

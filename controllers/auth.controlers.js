@@ -21,7 +21,7 @@ const crearUsuario= async(req,res)=>
   try{
 let usuario= await Usuario.findOne({email});
 if(usuario){
-    return res.json({msg:"alguno de los datos es incorrecto"})
+    return res.status(404).json({msg:"alguno de los datos es incorrecto"})
 }
     usuario=new Usuario(req.body);
     
@@ -33,12 +33,12 @@ usuario.password = bcrypt.hashSync(password, salt);
 //guardar usuario
     await usuario.save();
 
-    res.json({msg:'usuario registrado'});
+    res.status(201).json({msg:'usuario registrado'});
   }
 
 
     catch(error){
-res.json({msg:"error. contactese con el administrador"});
+res.ststus(500).json({msg:"error. contactese con el administrador"});
     }
    
    
@@ -61,23 +61,23 @@ const loginUsuario=async(req,res)=>
 
         let usuario= await Usuario.findOne({email});
         if(!usuario){
-            return res.json({msg:"alguno de los datos es incorrecto"});
+            return res.status(404).json({msg:"alguno de los datos es incorrecto"});
         }
 
         const validarContraseña= bcrypt.compareSync(password,usuario.password);
 
         if(!validarContraseña)
         {
-res.json({mge:"alguno de los datos es incorrecto"})
+res.status(404).json({mge:"alguno de los datos es incorrecto"})
         }
 
-        res.json({msg:"usuario loguedo correctamente"});
+        res.status(200).json({msg:"usuario loguedo correctamente"});
     }
 
 
 
     catch(error){
-        res.json({msg:"error. contactese con el administrador"});
+        res.ststus(500).json({msg:"error. contactese con el administrador"});
             }
 }
 

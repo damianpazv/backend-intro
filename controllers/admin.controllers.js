@@ -1,4 +1,7 @@
+const { validationResult } = require("express-validator");
+const Producto = require("../model/producto-model");
 const Usuario = require("../model/usuario-model");
+
 
 
 const cargarUsuarios= async (req,res) =>
@@ -27,7 +30,7 @@ catch(error)
 const crearProducto = async (req, res) =>
 {
    
-    const {name,price,description}=req.body;
+   
 
     const errors=validationResult(req);
 
@@ -37,29 +40,103 @@ const crearProducto = async (req, res) =>
     }
 
   try{
-let usuario= await Usuario.findOne({name});
-if(usuario){
-    return res.json({msg:"alguno de los datos es incorrecto"})
-}
-    usuario=new Usuario(req.body);
+
+    producto=new Producto(req.body);
     
 
-//encriptar contrseña
-const salt = bcrypt.genSaltSync(10);
-usuario.password = bcrypt.hashSync(password, salt);
+//guardar producto
+    await producto.save();
 
-//guardar usuario
-    await usuario.save();
-
-    res.json({msg:'usuario registrado'});
+    res.status(201).json({msg:'producto cargado correctamente'});
   }
 
 
     catch(error){
-res.json({msg:"error. contactese con el administrador"});
+res.status(500).json({msg:"error. contactese con el administrador"});
     }
    
    
 }
 
-module.exports = {cargarUsuarios,crearProducto};
+
+const cargarProductos= async (req,res) =>
+{
+
+try {
+const productos= await Producto.find();
+
+res.status(200).json({ok:true,
+    productos,
+});
+
+
+}
+
+catch(error)
+{
+
+    console.log(error);
+}
+
+
+};
+
+const editarProducto = async(req,res) => {
+
+    try{
+        const productoEdit= await Producto.findById(req.body._id);
+        console.log(productoEdit);
+        if(!productoEdit)
+        {
+res.status(404),json({
+    ok: false,
+    mge:"no existe producto con ese ID"});
+        }
+
+await Producto.findByIdAndUpdate(req.body._id,req.body);
+
+res.status(200).json({ok: true, mge:"producto editado"});
+
+    }
+
+
+
+    catch(error){
+        res.status(500).json({msg:"error. contactese con el administrador"});
+            }
+
+
+
+
+};
+
+const eliminarProducto= async (req,res) =>{
+
+    try{
+        const productoEliminar= await Producto.findById(req.params.id);
+        if(!productoEliminar)
+        {
+res.status(404).json({
+    ok: false,
+    mge:"no existe producto con ese ID"});
+        }
+
+await Producto.findByIdAndDelete(req.params.id);
+
+res.status(200).json({ok: true, mge:"producto eliminado"});
+
+    }
+
+
+
+    catch(error){
+        res.status(500).json({msg:"error. contactese con el administrador"});
+            }
+
+
+
+
+
+}
+
+module.exports = {cargarUsuarios,crearProducto,cargarProductos,editarProducto,eliminarProducto};

@@ -7,7 +7,7 @@ name:{
 },
 
 price:{
-    type:String,
+    type:Number,
     required: true,
     
 },

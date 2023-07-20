@@ -2,6 +2,7 @@ const { validationResult } = require("express-validator");
 const Usuario=require("../model/usuario-model");
 
 const bcrypt = require('bcrypt');
+const jsonwebtoken = require("jsonwebtoken");
 
 
 
@@ -33,12 +34,25 @@ usuario.password = bcrypt.hashSync(password, salt);
 //guardar usuario
     await usuario.save();
 
+    //generar JWT
+    const payload={
+        id:usuario.id,
+        name:usuario.name,
+        rol:usuario.rol
+
+    };
+
+    // const token=jwt.sign(payload,process.env.SECRET_JWT,
+    // {
+    //     expiresIn:"2h"
+    // })
+
     res.status(201).json({msg:'usuario registrado'});
   }
 
 
     catch(error){
-res.ststus(500).json({msg:"error. contactese con el administrador"});
+res.status(500).json({msg:"error. contactese con el administrador"});
     }
    
    

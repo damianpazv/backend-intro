@@ -2,7 +2,7 @@ const { validationResult } = require("express-validator");
 const Usuario=require("../model/usuario-model");
 
 const bcrypt = require('bcrypt');
-const jsonwebtoken = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 
 
 
@@ -38,16 +38,16 @@ usuario.password = bcrypt.hashSync(password, salt);
     const payload={
         id:usuario.id,
         name:usuario.name,
-        rol:usuario.rol
+        role:usuario.role
 
     };
 
-    // const token=jwt.sign(payload,process.env.SECRET_JWT,
-    // {
-    //     expiresIn:"2h"
-    // })
+    const token=jwt.sign(payload,process.env.SECRET_JWT,
+    {
+        expiresIn:"2h"
+    })
 
-    res.status(201).json({msg:'usuario registrado'});
+    res.status(201).json({msg:'usuario registrado',token});
   }
 
 
@@ -85,13 +85,29 @@ const loginUsuario=async(req,res)=>
 res.status(404).json({mge:"alguno de los datos es incorrecto"})
         }
 
-        res.status(200).json({msg:"usuario loguedo correctamente"});
+    //generar JWT
+    const payload={
+        id:usuario.id,
+        name:usuario.name,
+        role:usuario.role
+
+    };
+
+    const token=jwt.sign(payload,process.env.SECRET_JWT,
+        {
+            expiresIn:"2h"
+        })
+
+
+
+
+        res.status(200).json({msg:"usuario loguedo correctamente",token});
     }
 
 
 
     catch(error){
-        res.ststus(500).json({msg:"error. contactese con el administrador"});
+        res.status(500).json({msg:"error. contactese con el administrador"});
             }
 }
 

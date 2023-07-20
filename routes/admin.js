@@ -1,10 +1,11 @@
 const express = require('express');
 const { cargarUsuarios, crearProducto, cargarProductos, editarProducto, eliminarProducto } = require('../controllers/admin.controllers');
 const { check } = require('express-validator');
+const { validarJWT } = require('../middlewares/validar-jwt');
 const routerAdmin= express.Router();
 
 
-routerAdmin.get('/usuarios',cargarUsuarios);
+routerAdmin.get('/usuarios',validarJWT,cargarUsuarios);
 
 routerAdmin.get('/productos',cargarProductos);
 

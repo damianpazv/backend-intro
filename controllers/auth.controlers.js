@@ -44,7 +44,7 @@ usuario.password = bcrypt.hashSync(password, salt);
 
     const token=jwt.sign(payload,process.env.SECRET_JWT,
     {
-        expiresIn:"2h"
+        expiresIn:"2h",
     })
 
     res.status(201).json({msg:'usuario registrado',token});

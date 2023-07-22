@@ -5,19 +5,19 @@ const { validarJWT } = require('../middlewares/validar-jwt');
 const routerAdmin= express.Router();
 
 
-routerAdmin.get('/usuarios',validarJWT,cargarUsuarios);
+routerAdmin.get('/usuarios',cargarUsuarios);
 
-routerAdmin.get('/productos',cargarProductos);
+routerAdmin.get('/productos',validarJWT,cargarProductos);
 
-routerAdmin.post("/new",[
+routerAdmin.post("/new",validarJWT,[
     check('name',"el nombre es obligatorio").not().isEmpty(),
     check('price',"el precio es obligatorio").not().isEmpty(),
     check('description',"la descripcion es obligatoria").not().isEmpty(),
 ],crearProducto);
 
-routerAdmin.put('/editar',editarProducto);
+routerAdmin.put('/editar',validarJWT,editarProducto);
 
-routerAdmin.delete('/eliminar/:id',eliminarProducto);
+routerAdmin.delete('/eliminar/:id',validarJWT,eliminarProducto);
 
 
 module.exports = routerAdmin;

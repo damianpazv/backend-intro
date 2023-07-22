@@ -11,10 +11,11 @@ if(!token){
 
 try{
     const payload= jwt.verify(token,process.env.SECRET_JWT);
+    //console.log(payload);
 }
 catch(error)
 {
-    console.error(error);
+    return res.status(401).json({ok:false,mge:"token no valido"});
 }
 next();
 

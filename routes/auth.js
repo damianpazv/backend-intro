@@ -1,5 +1,5 @@
 const express = require('express');
-const {crearUsuario,loginUsuario,} = require('../controllers/auth.controlers');
+const {crearUsuario,loginUsuario, editarUsuario,} = require('../controllers/auth.controlers');
 const { check } = require('express-validator');
 const routerAuth= express.Router();
 
@@ -23,7 +23,7 @@ check("password","password debe tener mas de 5 caracteres").isLength({min:5})]
 ,loginUsuario);
 
 
-
+routerAuth.put("/editar",editarUsuario);
 
 
 module.exports = routerAuth;

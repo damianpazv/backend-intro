@@ -112,7 +112,29 @@ res.status(404).json({mge:"alguno de los datos es incorrecto"})
 }
 
 
+const editarUsuario = async(req,res) => {
+
+    try{
+        // const usuarioEdit= await Usuario.findById(req.body.id);
+        
+ 
+
+await Usuario.findByIdAndUpdate(req.body._id,{estado:req.body.estado});
+
+ res.status(200).json({ok: true, mge:"usuario editado"});
+
+    }
 
 
-module.exports = {crearUsuario,loginUsuario,};
+
+    catch(error){
+        res.status(500).json({msg:"error. contactese con el administrador"});
+            }
+
+
+
+
+};
+
+module.exports = {crearUsuario,loginUsuario,editarUsuario};
 

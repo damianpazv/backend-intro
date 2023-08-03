@@ -1,6 +1,7 @@
 const { validationResult } = require("express-validator");
 const Producto = require("../model/producto-model");
-const Usuario = require("../model/usuario-model");
+const {Usuario} = require("../model/usuario-model");
+const { Pedido } = require("../model/pedido-model");
 
 
 
@@ -26,6 +27,27 @@ catch(error)
 
 };
 
+const cargarPedidos= async (req,res) =>
+{
+
+try {
+const pedidos= await Pedido.find();
+
+res.status(200).json({ok:true,
+    pedidos,
+});
+
+
+}
+
+catch(error)
+{
+
+    console.log(error);
+}
+
+
+};
 
 const crearProducto = async (req, res) =>
 {
@@ -110,6 +132,61 @@ res.status(200).json({ok: true, mge:"producto editado"});
 
 };
 
+const editarPedido = async(req,res) => {
+
+    try{
+     
+        
+
+await Pedido.findByIdAndUpdate(req.body._id,{estado:req.body.estado});
+
+ res.status(200).json({ok: true, mge:"pedido editado"});
+
+    }
+
+
+
+    catch(error){
+        res.status(500).json({msg:"error. contactese con el administrador"});
+            }
+
+
+
+
+};
+
+
+const crearPedido = async (req, res) =>
+{
+   
+   
+
+    // const errors=validationResult(req);
+
+    // if(!errors.isEmpty())
+    // {
+    //     return res.json({errors:errors.mapped(),});
+    // }
+
+  try{
+
+    pedido=new Pedido(req.body);
+    
+
+//guardar producto
+    await pedido.save();
+
+    res.status(201).json({msg:'producto cargado correctamente'});
+  }
+
+
+    catch(error){
+res.status(500).json({msg:"error. contactese con el administrador"});
+    }
+   
+   
+}
+
 const eliminarProducto= async (req,res) =>{
 
     try{
@@ -139,4 +216,4 @@ res.status(200).json({ok: true, mge:"producto eliminado"});
 
 }
 
-module.exports = {cargarUsuarios,crearProducto,cargarProductos,editarProducto,eliminarProducto};
+module.exports = {cargarUsuarios,crearProducto,cargarProductos,editarProducto,eliminarProducto,editarPedido,crearPedido,cargarPedidos};

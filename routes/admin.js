@@ -9,7 +9,9 @@ routerAdmin.get('/usuarios',cargarUsuarios);
 
 routerAdmin.get('/productos',validarJWT,cargarProductos);
 
-routerAdmin.post("/new",validarJWT,[
+routerAdmin.post("/new",
+validarJWT,
+[
     check('name',"el nombre es obligatorio").not().isEmpty(),
     check('price',"el precio es obligatorio").not().isEmpty(),
     check('description',"la descripcion es obligatoria").not().isEmpty(),

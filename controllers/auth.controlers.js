@@ -1,5 +1,5 @@
 const { validationResult } = require("express-validator");
-const Usuario=require("../model/usuario-model");
+const {Usuario}=require("../model/usuario-model");
 
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
@@ -10,7 +10,7 @@ const jwt = require("jsonwebtoken");
 const crearUsuario= async(req,res)=>
 {
    
-    const {name,email,password}=req.body;
+    const {email,password}=req.body;
 
     const errors=validationResult(req);
 
@@ -35,19 +35,19 @@ usuario.password = bcrypt.hashSync(password, salt);
     await usuario.save();
 
     //generar JWT
-    const payload={
-        id:usuario.id,
-        name:usuario.name,
-        role:usuario.role
+    // const payload={
+    //     id:usuario.id,
+    //     name:usuario.name,
+    //     role:usuario.role
 
-    };
+    // };
 
-    const token=jwt.sign(payload,process.env.SECRET_JWT,
-    {
-        expiresIn:"2h",
-    })
+    // const token=jwt.sign(payload,process.env.SECRET_JWT,
+    // {
+    //     expiresIn:"2h",
+    // })
 
-    res.status(201).json({msg:'usuario registrado',token});
+    res.status(201).json({msg:'usuario registrado'});
   }
 
 

@@ -8,19 +8,27 @@ const routerAdmin= express.Router();
 routerAdmin.get('/usuarios',cargarUsuarios);
 routerAdmin.get('/pedidos',cargarPedidos);
 
-routerAdmin.get('/productos',validarJWT,cargarProductos);
+routerAdmin.get('/productos',
+// validarJWT,
+cargarProductos);
 
 routerAdmin.post("/new",
-validarJWT,
-[
-    check('name',"el nombre es obligatorio").not().isEmpty(),
-    check('price',"el precio es obligatorio").not().isEmpty(),
-    check('description',"la descripcion es obligatoria").not().isEmpty(),
-],crearProducto);
+// validarJWT,
+// [
+//     check('name',"el nombre es obligatorio").not().isEmpty(),
+//     check('price',"el precio es obligatorio").not().isEmpty(),
+//     check('description',"la descripcion es obligatoria").not().isEmpty(),
+// ],
+crearProducto);
 
-routerAdmin.put('/editar',validarJWT,editarProducto);
+routerAdmin.put('/editar'
+,
+//validarJWT,
+editarProducto);
 
-routerAdmin.delete('/eliminar/:id',validarJWT,eliminarProducto);
+routerAdmin.delete('/eliminar/:id',
+//validarJWT,
+eliminarProducto);
 
 routerAdmin.put('/editarpedido',editarPedido);
 

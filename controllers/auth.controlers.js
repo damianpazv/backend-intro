@@ -117,11 +117,19 @@ const editarUsuario = async(req,res) => {
     try{
         // const usuarioEdit= await Usuario.findById(req.body.id);
         
- 
+ if(req.body.estado)
+ {
+    await Usuario.findByIdAndUpdate(req.body._id,{estado:req.body.estado});
 
-await Usuario.findByIdAndUpdate(req.body._id,{estado:req.body.estado});
+    res.status(200).json({ok: true, mge:"usuario editado"});
+ }
 
- res.status(200).json({ok: true, mge:"usuario editado"});
+else if(req.body.rol)
+{
+    await Usuario.findByIdAndUpdate(req.body._id,{rol:req.body.rol});
+
+    res.status(200).json({ok: true, mge:"usuario editado"});
+}
 
     }
 
